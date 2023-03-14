@@ -3,7 +3,15 @@
     "description": "Obtener avisos",
     "manifest_version": 3,
     "version": "1.0",
-    "permissions":["activeTab","scripting","tabs"],
+    "permissions":["activeTab","scripting", "tabs"],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://www.occ.com.mx/*"
+        ],
+        "js": ["./contentscript.js"]
+      }
+    ],
     "action":{
         "default_popup": "./popup/index.html"
     },

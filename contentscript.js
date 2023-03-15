@@ -8,7 +8,7 @@ chrome.runtime.onConnect.addListener(function (port) {
 });
 
 //Connect to background
-const port = chrome.runtime.connect({ name: "content" });
+const port = chrome.runtime.connect({ name: "content-background" });
 port.postMessage({ message: "Hola Background" });
 port.onMessage.addListener(async ({ message }) => {
   alert(message);

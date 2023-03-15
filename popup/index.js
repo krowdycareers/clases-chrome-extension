@@ -11,7 +11,7 @@ btnScripting.addEventListener("click", async () => {
 });
 
 btnScriptingBackground.addEventListener("click", async () => {
-  var port = chrome.runtime.connect({ name: "background" });
+  var port = chrome.runtime.connect({ name: "popup-background" });
   port.postMessage({ message: "Hola BD" });
   port.onMessage.addListener(function ({ message }) {
     alert(message);

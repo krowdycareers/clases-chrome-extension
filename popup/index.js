@@ -1,13 +1,19 @@
-const btnScripting = document.getElementById("btnscript");
+const btnScripting = document.getElementById("btncomunicacion");
+const btnScriptingBackground = document.getElementById("btncomunicacionbckg");
 
 btnScripting.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: alertHelloWorld,
+  let port = chrome.tabs.connect(tab.id, { name: "popup" });
+  port.postMessage({ message: "hola" });
+  port.onMessage.addListener(function ({ message }) {
+    alert(message);
   });
 });
 
-function alertHelloWorld() {
-  alert("Hello World");
-}
+btnScriptingBackground.addEventListener("click", async () => {
+  var port = chrome.runtime.connect({ name: "background" });
+  port.postMessage({ message: "Hola BD" });
+  port.onMessage.addListener(function ({ message }) {
+    alert(message);
+  });
+});

@@ -73,7 +73,10 @@ const filtros = (resultados) => {
     if (chekHoy.checked) {
       
          elementosFiltro.forEach(function (elemento) {
-          if(!elemento.dataset.fecha.includes('día') && !elemento.dataset.fecha!=="Hoy"){
+          
+          console.log(!elemento.dataset.fecha.includes('día'),"día")
+          console.log(elemento.dataset.fecha!=="Hoy","hoy")
+          if(!(elemento.dataset.fecha=="Hoy" || elemento.dataset.fecha.includes('día'))){
             
             elemento.classList.add("ocultar")
           }

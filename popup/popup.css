@@ -25,6 +25,10 @@ a,a:link, a:visited, a:active{
     color: #fff;
 }
 
+li:hover{
+    opacity: .4;
+}
+
 li{
     width: 80%;
     border: solid white 3px;

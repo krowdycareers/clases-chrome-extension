@@ -43,24 +43,28 @@ const filtros = (resultados) => {
   let resultados = res[0].result;
   let trabajos = document.getElementById("trabajos");
   trabajos.appendChild(filtros(resultados));
+  let elementosFiltro = Array.from(trabajos.children);
+  console.log(elementosFiltro)
   
   //Filtros
   let chekRecomendados = document.getElementById("recomendada");
   let chekHoy = document.getElementById("hoy");
-  
+  console.log(elementosFiltro[0].dataset.recomendado)
   //
-  let recomendados = document.querySelectorAll('[data-recomendado="Sin recomendacion"]')
   
   chekRecomendados.addEventListener("change", (e) => {
     if (chekRecomendados.checked) {
       
-        recomendados.forEach(function (elemento) {
-          elemento.classList.add("ocultar");
+        elementosFiltro.forEach(function (elemento) {
+          if(elemento.dataset.recomendado !== 'Recomendada'){
+            console.log(elemento.dataset.recomendado)
+            elemento.classList.add("ocultar")
+          }
         });
     }
     else{
       
-        recomendados.forEach(function (elemento) {
+        elementosFiltro.forEach(function (elemento) {
           elemento.classList.remove("ocultar");
         });
     }

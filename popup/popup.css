@@ -48,3 +48,7 @@ a>p{
     font-size: 20px;
     flex:1;
 }
+
+.ocultar{
+    display: none;
+}

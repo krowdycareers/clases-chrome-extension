@@ -44,52 +44,72 @@ const filtros = (resultados) => {
   let trabajos = document.getElementById("trabajos");
   trabajos.appendChild(filtros(resultados));
   let elementosFiltro = Array.from(trabajos.children);
-  console.log(elementosFiltro)
-  
+  // console.log(elementosFiltro)
+
   //Filtros
   let chekRecomendados = document.getElementById("recomendada");
   let chekHoy = document.getElementById("hoy");
-  console.log(elementosFiltro[0].dataset.recomendado)
+  // console.log(elementosFiltro[0].dataset.recomendado)
   //
-  
+
   chekRecomendados.addEventListener("change", (e) => {
     if (chekRecomendados.checked) {
-      
+      elementosFiltro.forEach(function (elemento) {
+        if (elemento.dataset.recomendado !== "Recomendada") {
+          console.log(elemento.dataset.recomendado);
+          elemento.classList.add("ocultar");
+        }
+      });
+    } else {
+      elementosFiltro.forEach(function (elemento) {
+        elemento.classList.remove("ocultar");
+      });
+
+      if (chekHoy.checked) {
         elementosFiltro.forEach(function (elemento) {
-          if(elemento.dataset.recomendado !== 'Recomendada'){
-            console.log(elemento.dataset.recomendado)
-            elemento.classList.add("ocultar")
+          // console.log(!elemento.dataset.fecha.includes('día'),"día")
+          // console.log(elemento.dataset.fecha!=="Hoy","hoy")
+          if (
+            !(
+              elemento.dataset.fecha == "Hoy" ||
+              elemento.dataset.fecha.includes("día")
+            )
+          ) {
+            elemento.classList.add("ocultar");
           }
         });
-    }
-    else{
-      
-        elementosFiltro.forEach(function (elemento) {
-          elemento.classList.remove("ocultar");
-        });
+      }
     }
   });
-   chekHoy.addEventListener("change", (e) => {
+  chekHoy.addEventListener("change", (e) => {
     if (chekHoy.checked) {
-      
-         elementosFiltro.forEach(function (elemento) {
-          
-          console.log(!elemento.dataset.fecha.includes('día'),"día")
-          console.log(elemento.dataset.fecha!=="Hoy","hoy")
-          if(!(elemento.dataset.fecha=="Hoy" || elemento.dataset.fecha.includes('día'))){
-            
-            elemento.classList.add("ocultar")
+      elementosFiltro.forEach(function (elemento) {
+        // console.log(!elemento.dataset.fecha.includes('día'),"día")
+        // console.log(elemento.dataset.fecha!=="Hoy","hoy")
+        if (
+          !(
+            elemento.dataset.fecha == "Hoy" ||
+            elemento.dataset.fecha.includes("día")
+          )
+        ) {
+          elemento.classList.add("ocultar");
+        }
+      });
+    } else {
+      elementosFiltro.forEach(function (elemento) {
+        elemento.classList.remove("ocultar");
+      });
+
+      if (chekRecomendados.checked) {
+        elementosFiltro.forEach(function (elemento) {
+          if (elemento.dataset.recomendado !== "Recomendada") {
+            console.log(elemento.dataset.recomendado);
+            elemento.classList.add("ocultar");
           }
         });
-    }
-    else{
-      
-        elementosFiltro.forEach(function (elemento) {
-          elemento.classList.remove("ocultar");
-        });
+      }
     }
   });
-  
 })();
 
 function alertHelloWorld() {

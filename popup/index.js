@@ -9,5 +9,5 @@ btnScripting.addEventListener("click", async () => {
 });
 
 function alertHelloWorld() {
-  alert("Hello World");
+  alert("It works!");
 }

@@ -69,20 +69,23 @@ const filtros = (resultados) => {
         });
     }
   });
-  //  chekHoy.addEventListener("change", (e) => {
-  //   if (chekHoy.checked) {
+   chekHoy.addEventListener("change", (e) => {
+    if (chekHoy.checked) {
       
-  //       diaHoy.forEach(function (elemento) {
-  //         elemento.classList.add("ocultar");
-  //       });
-  //   }
-  //   else{
+         elementosFiltro.forEach(function (elemento) {
+          if(!elemento.dataset.fecha.includes('día') && !elemento.dataset.fecha!=="Hoy"){
+            
+            elemento.classList.add("ocultar")
+          }
+        });
+    }
+    else{
       
-  //       diaHoy.forEach(function (elemento) {
-  //         elemento.classList.remove("ocultar");
-  //       });
-  //   }
-  // });
+        elementosFiltro.forEach(function (elemento) {
+          elemento.classList.remove("ocultar");
+        });
+    }
+  });
   
 })();
 

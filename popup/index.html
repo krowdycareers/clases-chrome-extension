@@ -5,11 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
-
+    <h1>Job Escraping</h1>
+    <button id="btnscript">Scrapear</button>
+    <p>Resultados</p>
+    <form>
+        <div>
+            <input id="recomendada" type="checkbox" value="true">
+            <label for="recomendada">Recomendados</label>
+        </div>
+        <div>
+            <input id="hoy" type="checkbox" value="true">
+            <label for="hoy">Recientes</label>
+        </div>
+        
+    </form>
+    <ul id="trabajos">
+    </ul>
     <script src="./index.js"></script>
 </body>
 </html>

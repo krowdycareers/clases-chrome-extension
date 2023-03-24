@@ -1,45 +1,26 @@
-function findElementByClassName(elementsArray, className) {
-  return elementsArray.find((element) => element.className.includes(className));
-}
-
 function getDataScraping() {
   const nodeListOfJobCard = document.querySelectorAll("[id*='jobcard-']");
   const jobCardArray = [...nodeListOfJobCard];
 
   const dataScraping = jobCardArray.map((jobCardElement) => {
-    const pElemetsArray = [...jobCardElement.getElementsByTagName("p")];
-    const aElementsArray = [...jobCardElement.getElementsByTagName("a")];
-    const h2ElemetsArray = [...jobCardElement.getElementsByTagName("h2")];
-    const spanElemetsArray = [...jobCardElement.getElementsByTagName("span")];
-    const labelElemetsArray = [...jobCardElement.getElementsByTagName("label")];
-
-    const postLink = findElementByClassName(
-      aElementsArray,
-      "jobcard-0-2-559"
-    ).href;
-    const datePosted = findElementByClassName(
-      labelElemetsArray,
-      "text-0-2-82 small-0-2-90"
+    const postLink = jobCardElement.querySelector("a.jobcard-0-2-559").href;
+    const datePosted = jobCardElement.querySelector(
+      "label.text-0-2-82.small-0-2-90"
     ).innerText;
-    const jobPosition = findElementByClassName(
-      h2ElemetsArray,
-      "text-0-2-82 subheading-0-2-86"
+    const jobPosition = jobCardElement.querySelector(
+      "h2.text-0-2-82.subheading-0-2-86"
     ).innerText;
-    const salaryRange = findElementByClassName(
-      spanElemetsArray,
-      "text-0-2-82 standard-0-2-89"
+    const salaryRange = jobCardElement.querySelector(
+      "span.text-0-2-82.standard-0-2-89"
     ).innerText;
-    const jobDescription = findElementByClassName(
-      pElemetsArray,
-      "text-0-2-82 small-0-2-90"
+    const jobDescription = jobCardElement.querySelector(
+      "p.text-0-2-82.small-0-2-90"
     ).innerText;
-    const companyElement = findElementByClassName(
-      labelElemetsArray,
-      "text-0-2-82 standard-0-2-89"
+    const companyElement = jobCardElement.querySelector(
+      "label.text-0-2-82.standard-0-2-89"
     );
-    const locationsElement = findElementByClassName(
-      pElemetsArray,
-      "zonesLinks-0-2-602"
+    const locationsElement = jobCardElement.querySelector(
+      "p.zonesLinks-0-2-602"
     );
 
     const locationsNamesArray = locationsElement.innerText

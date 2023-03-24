@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
+    <style>
+      body {
+        background-color: #333;
+        color: #ccc;
+        min-width: 250px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+
+      span {
+        display: inline-block;
+        font-size: x-large;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+
+      button {
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: transparent;
+        color: inherit;
+        border-radius: 100vh;
+        padding: 4px 8px;
+      }
+
+      button:hover {
+        border-color: #fff;
+        background-color: #666;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <span>Scraping Data</span>
+      <button id="btnscript">Get Info</button>
+    </div>
 
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>

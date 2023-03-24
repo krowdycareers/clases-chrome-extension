@@ -4,10 +4,6 @@ btnScripting.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    func: alertHelloWorld,
+    files: ["./popup/js/script.js"],
   });
 });
-
-function alertHelloWorld() {
-  alert("Hello World");
-}

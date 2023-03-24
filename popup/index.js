@@ -9,5 +9,16 @@ btnScripting.addEventListener("click", async () => {
 });
 
 function alertHelloWorld() {
-  alert("Hello World");
+  const elemCardJobs  =[...document.querySelectorAll('[id*="jobcard-"]')]
+  const jobs = elemCardJobs.map((cardJob) =>{
+    return {
+      url: cardJob.querySelector("a[class*='jobcard-']").href,
+      date: cardJob.querySelector("[class*='date-']").textContent,
+      title: cardJob.querySelector("h2[class*='text-']").textContent,
+      salary: cardJob.querySelector("span[class*='salary-']").textContent,
+      country: cardJob.querySelector("p[class*='text-']").textContent
+    };
+  });
+
+  console.log(jobs);
 }

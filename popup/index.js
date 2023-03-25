@@ -1,13 +1,16 @@
-const btnScripting = document.getElementById("btnscript");
+const btnScripting = document.getElementById("btncomunicacion");
+const btnScriptingBackground = document.getElementById("btncomunicacionbckg");
 
 btnScripting.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: alertHelloWorld,
+  let port = chrome.tabs.connect(tab.id, { name: "popup" });
+  port.postMessage({ message: "hola" });
+  port.onMessage.addListener(function ({ message }) {
+    alert(message);
   });
 });
 
+<<<<<<< HEAD
 function alertHelloWorld() {
   const elemCardJobs = [...document.querySelectorAll("[id*='jobcard-']")];
   const jobs = elemCardJobs.map((job) => {
@@ -74,3 +77,12 @@ function alertHelloWorld() {
 
 //   console.log(jobs);
 // }
+=======
+btnScriptingBackground.addEventListener("click", async () => {
+  var port = chrome.runtime.connect({ name: "popup-background" });
+  port.postMessage({ message: "Hola BD" });
+  port.onMessage.addListener(function ({ message }) {
+    alert(message);
+  });
+});
+>>>>>>> ad5ec94cd7b5ad0fb783e44dcc77388f80689647

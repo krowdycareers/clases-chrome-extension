@@ -2,18 +2,17 @@ const btnScripting = document.getElementById("btncomunicacion");
 const btnScriptingBackground = document.getElementById("btncomunicacionbckg");
 const pMensaje = document.getElementById("mensajes");
 
-const FiltroLugar = (arrayTrabajos) => {
-  let auxfiltro = "lugar";
+const FiltroLugar = (arrayTrabajos,filtro) => {
   let cantidad = {};
-  let trabajoPorSalario = {};
+  
   arrayTrabajos.forEach((trabajo) => {
-    if (cantidad[trabajo[auxfiltro]]) {
-      cantidad[trabajo[auxfiltro]].cantidad++;
-      cantidad[trabajo[auxfiltro]].trabajos.push(trabajo);
+    if (cantidad[trabajo[filtro]]) {
+      cantidad[trabajo[filtro]].cantidad++;
+      cantidad[trabajo[filtro]].trabajos.push(trabajo);
       // cantidad[trabajo[auxfiltro]].enlaceTrabajo.push(trabajo.enlace);
       // cantidad[trabajo[auxfiltro]][valoraux].push(trabajo[valoraux]);
     } else {
-      cantidad[trabajo[auxfiltro]] = {
+      cantidad[trabajo[filtro]] = {
         cantidad: 1,
         trabajos: [trabajo],
         // enlaceTrabajo: [trabajo.enlace],
@@ -22,8 +21,7 @@ const FiltroLugar = (arrayTrabajos) => {
     }
 
   });
-  let auxfiltro2 = "sueldo";
-  console.log(cantidad)
+  return cantidad
   // for (const ciudad in cantidad) {
   //   console.log(ciudad,cantidad[ciudad])
   // }
@@ -50,8 +48,22 @@ btnScripting.addEventListener("click", async () => {
   port.onMessage.addListener(function ({ message, data }) {
     if (message === "ok") {
       
-      FiltroLugar(data)
+      let lugares = FiltroLugar(data,"lugar")
+      let ciudades = Object.keys(lugares)
+      let sueldoPorCiudad =[]
+      ciudades.forEach(ciudad =>{
+        const trabajoPorCiudad =  lugares[ciudad].trabajos;
+        sueldoPorCiudad.push(FiltroLugar(trabajoPorCiudad,"sueldo"))
+      })
+      // for (const lugar in lugares) {
+      //   const trabajoPorCiudad =  lugares[lugar].trabajos;
+        
+      //   sueldoPorCiudad.push(FiltroLugar(trabajoPorCiudad,"sueldo"))
 
+      // }
+      console.log(lugares)
+      console.log(ciudades)
+      console.log(sueldoPorCiudad)
       pMensaje.textContent = JSON.stringify(data, null, 2);
     }
     // alert(message);

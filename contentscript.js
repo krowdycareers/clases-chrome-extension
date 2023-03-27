@@ -1,33 +1,40 @@
 console.log("Ejecutando el content script 2.0");
-const getJobInformation = () => {
-  const elemCardJobs = [...document.querySelectorAll('[id*="jobcard-"]')];
-  // console.log(elemCardJobs);
-  const jobs = elemCardJobs.map((cardJob) => {
-    const [
-      { href: url },
-      {
-        children: [
-          {
-            children: [
-              { innerText: fecha },
-              { innerText: title },
-              { innerText: salario },
-              { innerText: beneficio },
-              {},
-              {
-                children: [elementEmpresaCiudad],
-              },
-            ],
-          },
-        ],
-      },
-    ] = cardJob.children;
-    const empresa = elementEmpresaCiudad?.querySelector("label").innerText;
-    const ciudad = elementEmpresaCiudad?.querySelector("label").innerText;
-    return { url, fecha, title, salario, beneficio, empresa, ciudad };
+
+function filtradoCaracteristicasEmpleos() {
+  //query selector jobcard
+  const empleos = document.querySelectorAll("div[id*=jobcard-]");
+  const arrayEmpleos = Array.from(empleos);
+  const caracteristicasEmpleos = arrayEmpleos.map((empleo) => {
+    let data = {
+      recomendado: "Sin recomendacion",
+    };
+    data.url = empleo.querySelector("a[class*=jobcard-]").href;
+    let caracteristicasEmpleo = empleo.children[1].children[0];
+    let hijosEmpleoRecuperar =
+      caracteristicasEmpleo.children[0].querySelectorAll("label");
+    data.fecha = hijosEmpleoRecuperar[0].textContent;
+    if (hijosEmpleoRecuperar.length >= 2) {
+      data.recomendado = hijosEmpleoRecuperar[1].textContent;
+    }
+    data.titulo = caracteristicasEmpleo.children[1].textContent;
+    data.sueldo = caracteristicasEmpleo.children[2].textContent;
+    data.empresa =
+      caracteristicasEmpleo.children[
+        caracteristicasEmpleo.children.length - 2
+      ].querySelector("label").textContent;
+    data.lugar =
+      caracteristicasEmpleo.children[
+        caracteristicasEmpleo.children.length - 2
+      ].querySelector("p").textContent;
+
+    return data;
   });
-  return jobs;
-};
+  
+  return caracteristicasEmpleos;
+}
+
+
+
 
 //Connect to background
 
@@ -47,7 +54,7 @@ chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(function ({ message }) {
     // alert(`${port.name}: message`);
     if (message === "getJobs") {
-      const jobs = getJobInformation();
+      const jobs = filtradoCaracteristicasEmpleos();
       port.postMessage({ message:"ok", data:jobs });
       portBackground.postMessage({ message:"finish"});
     }

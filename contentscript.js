@@ -39,11 +39,7 @@ function filtradoCaracteristicasEmpleos() {
 //Connect to background
 
 const portBackground = chrome.runtime.connect({ name: "content-background" });
-
-// port.postMessage({ message: "Hola Background" });
 portBackground.onMessage.addListener(async ({ message }) => {
-  // alert(message);
-  // console.log(message);
   if(message === 'nextpage'){
     const nextPageButton = document.querySelector("[class*=next-]")
     nextPageButton.click()
@@ -52,7 +48,7 @@ portBackground.onMessage.addListener(async ({ message }) => {
 
 chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(function ({ message }) {
-    // alert(`${port.name}: message`);
+    
     if (message === "getJobs") {
       const jobs = filtradoCaracteristicasEmpleos();
       port.postMessage({ message:"ok", data:jobs });

@@ -9,36 +9,19 @@ const FiltroLugar = (arrayTrabajos,filtro) => {
     if (cantidad[trabajo[filtro]]) {
       cantidad[trabajo[filtro]].cantidad++;
       cantidad[trabajo[filtro]].trabajos.push(trabajo);
-      // cantidad[trabajo[auxfiltro]].enlaceTrabajo.push(trabajo.enlace);
-      // cantidad[trabajo[auxfiltro]][valoraux].push(trabajo[valoraux]);
+      
     } else {
       cantidad[trabajo[filtro]] = {
         cantidad: 1,
         trabajos: [trabajo],
-        // enlaceTrabajo: [trabajo.enlace],
+        
       };
-      // cantidad[trabajo[auxfiltro]][valoraux] = [trabajo[valoraux]];
+      
     }
 
   });
   return cantidad
-  // for (const ciudad in cantidad) {
-  //   console.log(ciudad,cantidad[ciudad])
-  // }
-  // cantidad.trabajos.forEach((trabajo)=>{
-  //   if (trabajoPorSalario[trabajo[auxfiltro2]]) {
-  //     trabajoPorSalario[trabajo[auxfiltro2]].cantidad++;
-  //     trabajoPorSalario[trabajo[auxfiltro2]].trabajos.push(trabajo.titulo);
-      
-  //   } else {
-  //     trabajoPorSalario[trabajo[auxfiltro2]] = {
-  //       trabajoPorSalario: 1,
-  //       trabajos: [trabajo],
-        
-  //     };
-  //   }
-  // })
-  // console.log({cantidad,trabajoPorSalario})
+  
 };
 
 btnScripting.addEventListener("click", async () => {
@@ -55,18 +38,13 @@ btnScripting.addEventListener("click", async () => {
         const trabajoPorCiudad =  lugares[ciudad].trabajos;
         sueldoPorCiudad.push(FiltroLugar(trabajoPorCiudad,"sueldo"))
       })
-      // for (const lugar in lugares) {
-      //   const trabajoPorCiudad =  lugares[lugar].trabajos;
-        
-      //   sueldoPorCiudad.push(FiltroLugar(trabajoPorCiudad,"sueldo"))
-
-      // }
+     
       console.log(lugares)
       console.log(ciudades)
       console.log(sueldoPorCiudad)
       pMensaje.textContent = JSON.stringify(data, null, 2);
     }
-    // alert(message);
+    
   });
 });
 

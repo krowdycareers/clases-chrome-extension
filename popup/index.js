@@ -1,20 +1,25 @@
 const btnScripting = document.getElementById("btncomunicacion");
 const btnScriptingBackground = document.getElementById("btncomunicacionbckg");
-const main = document.querySelector("#main");
+const results = document.querySelector("#results");
 
 btnScripting.addEventListener("click", async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  let port = chrome.tabs.connect(tab.id, { name: "popup" });
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    let port = chrome.tabs.connect(tab.id, { name: "popup" });
+
+    port.postMessage({ message: "getJobs" });
   
-  port.postMessage({ message: "getJobs" });
-  
-  port.onMessage.addListener(function ({ success, jobs }) {
-    main.style.width = "30rem";
-    main.innerHTML = JSON.stringify({
-        success,
-        jobs
-    }, null, 2);
-  });
+    port.onMessage.addListener(function (result) {
+        if(!result.success) return;
+        
+        switch(result.message) {
+            case "receivedJobs": {
+                results.innerHTML = JSON.stringify(result.jobs, null, 2);
+            }
+            default: {
+                throw new Error(`Unexpected Message: ${result.message}`);
+            }
+        }
+    });
 });
 
 btnScriptingBackground.addEventListener("click", async () => {

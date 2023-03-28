@@ -1,23 +1,7 @@
-console.log("Ejecutando el content script 3.0");
+console.log("Ejecutando el content script 1.0.2");
 
-chrome.runtime.onConnect.addListener(function (port) {
-  port.onMessage.addListener(function ({ message }) {
-    if (message === "getJobs") {
-        port.postMessage({ success: true, jobs: getJobs() });
-    }
-  });
-});
-
-// Connect to background
-// const port = chrome.runtime.connect({ name: "content-background" });
-// port.postMessage({ message: "Hola Background" });
-// port.onMessage.addListener(async ({ message }) => {
-//   alert(message);
-// });
-
-function getJobs() {
-    const jobElements = Array.from(document.querySelectorAll("[id*='jobcard']"));
-    const jobCards = jobElements.map((jobElement) => jobElement.querySelector("[class*='cardContent']"));
+function getInformationRelatedToJobsFromDocument() {
+    const jobCards = Array.from(document.querySelectorAll("[class*='cardContent']"));
     const jobs = jobCards.map((jobCard) => {
         const [
             publicationDetailsContainer,
@@ -34,7 +18,7 @@ function getJobs() {
             salary: extractSalaryDetails(salaryContainer.innerText)
         };
     });
-
+    
     return jobs;
 }
 
@@ -58,3 +42,29 @@ function extractSalaryDetails(salaryDetails = "") {
         maxSalary
     };
 }
+
+chrome.runtime.onConnect.addListener(function (port) {
+    port.onMessage.addListener(function ({ message }) {
+        switch(message) {
+            case "getJobs": {
+                const jobs = getInformationRelatedToJobsFromDocument();
+                
+                port.postMessage({
+                    message: "receivedJobs",
+                    success: true,
+                    jobs
+                });
+            }
+            default: {
+                throw new Error(`Unexpected Message: ${message}`);
+            }
+        }
+    });
+});
+
+// Connect to background
+// const port = chrome.runtime.connect({ name: "content-background" });
+// port.postMessage({ message: "Hola Background" });
+// port.onMessage.addListener(async ({ message }) => {
+//   alert(message);
+// });

@@ -6,6 +6,7 @@ btnScripting.addEventListener("click", async () => {
   let port = chrome.tabs.connect(tab.id, { name: "popup" });
   port.postMessage({ message: "hola" });
   port.onMessage.addListener(function ({ message }) {
+    // if(message === "ok")
     alert(message);
   });
 });

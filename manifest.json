@@ -12,7 +12,8 @@
         "matches": [
           "https://www.occ.com.mx/*"
         ],
-        "js": ["./contentscript.js"]
+        "js": ["./contentscript.js"],
+        "run_at": "document_end"
       }
     ],
     "action":{

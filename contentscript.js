@@ -1,4 +1,4 @@
-console.log("Ejecutando el content script 1.0.2");
+console.log("Ejecutando el content script 1.0.3");
 
 function getInformationRelatedToJobsFromDocument() {
     const jobCards = Array.from(document.querySelectorAll("[class*='cardContent']"));
@@ -43,6 +43,16 @@ function extractSalaryDetails(salaryDetails = "") {
     };
 }
 
+// Connect to background
+// const portBackground = chrome.runtime.connect({ name: "content-background" });
+// 
+// portBackground.onMessage.addListener(async ({ message }) => {
+//     if ((message = "nextpage")) {
+//         const nextPageButton = document.querySelector("[class*=next-]");
+//         nextPageButton.click();
+//     }
+// });
+
 chrome.runtime.onConnect.addListener(function (port) {
     port.onMessage.addListener(function ({ message }) {
         switch(message) {
@@ -61,10 +71,3 @@ chrome.runtime.onConnect.addListener(function (port) {
         }
     });
 });
-
-// Connect to background
-// const port = chrome.runtime.connect({ name: "content-background" });
-// port.postMessage({ message: "Hola Background" });
-// port.onMessage.addListener(async ({ message }) => {
-//   alert(message);
-// });

@@ -36,27 +36,36 @@ function getJobsSummary() {
 console.log('Ejecutando el content script 1.0');
 
 // Connect to background
-const portBackground = chrome.runtime.connect({ name: 'content-background' });
-portBackground.onMessage.addListener(async ({ message }) => {
-  if ((message = 'nextpage')) {
-    const nextBtn = document.querySelector('[class*=next-]');
-    nextBtn.click();
-  }
-});
+// const portBackground = chrome.runtime.connect({ name: 'content-background' });
+// portBackground.onMessage.addListener(async ({ message }) => {
+//   if ((message = 'nextpage')) {
+//     const nextBtn = document.querySelector('[class*=next-]');
+//     nextBtn.click();
+//   }
+// });
 
-chrome.runtime.onConnect.addListener(function (port) {
-  port.onMessage.addListener(async ({ message }) => {
+function nextPage() {
+  const nextBtn = document.querySelector('[class*=next-]');
+  nextBtn.click();
+}
+function prevPage() {
+  const prevBtn = document.querySelector('[class*=prev-]');
+  prevBtn.click();
+}
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name !== 'popup') return;
+  
+  port.onMessage.addListener(({ message }) => {
     if (message === 'getJobs') {
       const jobs = getJobsSummary();
       port.postMessage({ message: 'ok', data: jobs });
-    } else if (message === 'nextPage') {
-      portBackground.postMessage({ message: 'nextPage' });
-      await portBackground.onMessage.addListener( ({ message }) => {
-        if(message === 'ok') {
-          const jobs = getJobsSummary();
-          port.postMessage({ message: 'ok', data: jobs });
-        }
-      })
+    }
+    if (message === 'nextPage') {
+      nextPage();
+    }
+    if (message === 'prevPage') {
+      prevPage();
     }
   });
 });

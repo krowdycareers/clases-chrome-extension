@@ -1,15 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
+<style>
+    body {
+        width: 300px;
+    }
 
+    table {
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    tbody,
+    thead tr {
+        display: block;
+    }
+
+    tbody {
+        height: 100px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    tr,
+    tbody tr {
+        border-bottom: 1px solid #e1e1e1;
+    }
+
+    tbody td,
+    thead th {
+        width: 80px;
+        text-align: center;
+    }
+
+    thead th:last-child {
+        width: 98px;
+    }
+
+    .container {
+        display: grid;
+        place-content: center;
+        height: 100%;
+        padding: 20px 0;
+    }
+
+    .btn-start {
+        border-radius: 5px;
+        border: 1px solid rgb(24, 48, 155);
+        background-color: white;
+        font-size: .9rem;
+        font-weight: 600;
+        padding: 5px 25px;
+    }
+
+    .btn-start:hover {
+        border-radius: 5px;
+        background-color: rgb(24, 48, 155);
+        color: white;
+        transition: .3s ease-in-out;
+        font-size: .9rem;
+        cursor: pointer;
+    }
+    .btn-start:disabled {
+        cursor: not-allowed;
+        background-color: white;
+        color: #b3b3b3;
+        border: 1px solid #b3b3b3;
+    }
+
+    .btn-controller {
+        margin-top: 15px;
+        display: none;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .btn-item {
+        width: 50%;
+        border-radius: 5px;
+        padding: 5px 0;
+        background-color: rgb(44, 44, 44);
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    .btn-item:hover {
+        background-color: black;
+        transition: .3s ease-in-out;
+    }
+
+    .btn-context {
+        display: none;
+    }
+    #text {
+        display: none;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <button class="btn-start">Obtener resumen de avisos</button>
+        <div class="btn-controller">
+            <button class="btn-item btn-prev">❮ Prev</button>
+            <button class="btn-item btn-next">Next ❯</button>
+        </div>
+    </div>
+    <div class="btn-context">
+        <div class="btn">
+            <button id="btncomunicacion">Enviar hola al contexto de la página</button>
+        </div>
+        <button id="btncomunicacionbckg">Enviar hola al background</button>
+    </div>
+    <div id="text">
+        <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Título</th>
+                <th>URL</th>
+              </tr>
+            </thead>
+            <tbody class="tbody">
+            </tbody>
+        </table>
+    </div>
     <script src="./index.js"></script>
 </body>
+
 </html>

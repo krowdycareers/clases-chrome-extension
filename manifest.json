@@ -9,5 +9,15 @@
     },
     "icons":{
       "32":"./images/icon.png"
-  }
+  },
+  "content_scripts":[
+    {
+      "matches": [
+        "https://www.occ.com.mx/*"
+      ],
+      "js": [
+        "./contentscript.js"
+      ]
+    }
+  ]
 }

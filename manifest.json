@@ -15,5 +15,9 @@
       "matches": ["https://www.occ.com.mx/*"],
       "js": ["./contentscript.js"]
     }
-  ]
+  ],
+  "background.service_worker": {
+    "scripts": ["index.js"],
+    "persistent": false
+  }
 }

@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-width: 230px;
+        gap: 10px;
+      }
 
+      .bySalaryContainer {
+        width: 450px;
+        height: auto;
+      }
+      .byDateContainer {
+        width: 450px;
+        height: auto;
+        display: none;
+      }
+
+      .jobsContainer {
+        border: 1px solid #aaa;
+        padding: 0.5rem;
+        padding-left: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <input
+      type="number"
+      id="inputNumberPages"
+      min="1"
+      max="6"
+      placeholder="max 6 pages- default value: 1"
+    />
+    <button id="btnscript">scrapping</button>
+    <div>
+      <span>Salary</span>
+      <input type="radio" name="inputsContainer" checked value="salary" />
+      <span>Date</span>
+      <input type="radio" name="inputsContainer" value="date" />
+    </div>
+
+    <div class="bySalaryContainer" id="containerSalary"></div>
+    <div class="byDateContainer" id="containerDate"></div>
+    <p id="messaje"></p>
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>

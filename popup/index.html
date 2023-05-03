@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
 </head>
 <body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
+<div class="container">
+  <button id="btnscript">lanzar alerta con script</button>
+  <div class="information__titles" id="information__titles">
+    <h3>Fecha</h3>
+    <h3>Salario</h3>
+    <h3># de trabajos encontrados</h3>
+  </div>
+  <div class="information" id="information">
+  </div>
+  <p id="message"></p>
+</div>
 
-    <script src="./index.js"></script>
+<script src="./index.js"></script>
 </body>
 </html>

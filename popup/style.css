@@ -1,0 +1,31 @@
+.container {
+  min-width: 600px;
+  padding: 30px 20px;
+}
+
+.information {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.information__jobs:nth-child(even) {
+  background: #083cae14;
+  border-radius: 5px;
+}
+
+.information__titles,
+.information__jobs__job {
+  width: 100%;
+  display: flex;
+}
+
+.information__titles h3,
+.information__jobs__job p {
+  flex: 1;
+  text-align: center;
+}
+
+.information__titles {
+  display: none;
+}

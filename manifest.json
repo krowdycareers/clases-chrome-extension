@@ -1,13 +1,27 @@
 {
-    "name": "scraping-occ",
-    "description": "Obtener avisos",
-    "manifest_version": 3,
-    "version": "1.0",
-    "permissions":["activeTab","scripting","tabs"],
-    "action":{
-        "default_popup": "./popup/index.html"
-    },
-    "icons":{
-      "32":"./images/icon.png"
-  }
+  "name": "scraping-occ",
+  "description": "Obtener avisos",
+  "manifest_version": 3,
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "./popup/index.html"
+  },
+  "icons": {
+    "32": "./images/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.occ.com.mx/*"
+      ],
+      "js": [
+        "./contentscript.js"
+      ]
+    }
+  ]
 }

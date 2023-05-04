@@ -52,11 +52,11 @@ function getJobsInformation() {
                   ,
                   {
                     //children: [{outerText:contractName}, { outerText: contract }]
-                    outerText: contract
+                    innerText: contract
                   },
-                  { outerText: detail1 },
-                  { outerText: detail2 },
-                  { outerText: detail3 },
+                  { innerText: detail1 },
+                  { innerText: detail2 },
+                  { innerText: detail3 },
                 ],
               },
             ],

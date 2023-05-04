@@ -5,10 +5,70 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        body{
+            background: #444444;
+            color: white;
+        }
+        .loader{
+            display: none;
+            text-align: center;
+        }
+        .container-card{
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .card{
+            display: flex;
+            flex-direction: column;
+            /* border-top: solid 1px #f7f4f4; */
+            padding: 6px;
+            background: #252526;
+            border-radius: 4px;
+        }
+        .card__title{
+            size: 1.5rem;
+            font-weight: 600;
+        }
+        .content-btn{
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        #btnscript{
+            background: rgb(33, 33, 34);
+            color: white;
+            border-radius: 4px;
+            /* outline: 0; */
+            border: 0;
+            padding: 6px 15px;
+            margin: auto;
+            cursor: pointer;
+        }
+        #btnscript:active{
+            transition: 0.5s;
+            background: #919192;
+            color: #131313;
+            position: relative;
+            bottom: -2px;
+        }
+    </style>
 </head>
 <body>
-    <p>Hola</p>
-    <button id="btnscript">lanzar alerta con script</button>
+    <!-- <p>Dinosaurio grande</p> -->
+    <div class="content-btn">
+        <button id="btnscript">get data</button>
+    </div>
+    
+
+    <div class="container-card">
+        <div class="card">
+            <div class="loader">...cargando</div>
+        </div>
+    </div>
 
     <script src="./index.js"></script>
 </body>

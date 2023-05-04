@@ -1,13 +1,13 @@
 const btnScripting = document.getElementById("btnscript");
+const pMessageElement = document.getElementById("mensaje")
 
 btnScripting.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: alertHelloWorld,
-  });
-});
+  const portActive = chrome.tabs.connect(tab.id, {name: "popup"})
 
-function alertHelloWorld() {
-  alert("Hello World");
-}
+  portActive.onMessage.addListener(function({message}){
+    pMessageElement.innerText = JSON.stringify(message, null, 3)
+  })
+
+  portActive.postMessage({cmd: "scrap"})
+});

@@ -1,4 +1,3 @@
-console.log("Ejecutando el content script 2.0");
 function getJobInformation() {
   const elemCardJobs = [...document.querySelectorAll('[id*="jobcard-"]')];
   const jobs = elemCardJobs.map((cardJob) => {
@@ -31,21 +30,17 @@ function getJobInformation() {
 }
 
 //Connect to background
-const portBackground = chrome.runtime.connect({ name: "content-background" });
-
-portBackground.onMessage.addListener(async ({ message }) => {
-  if ((message = "nextpage")) {
-    const nextPageButton = document.querySelector("[class*=next-]");
-    nextPageButton.click();
-  }
+const portBackground = chrome.runtime.connect({
+  name: "content_script-background",
 });
 
 chrome.runtime.onConnect.addListener(function (port) {
-  port.onMessage.addListener(function ({ message }) {
-    if (message === "getJobs") {
-      const jobs = getJobInformation();
-      port.postMessage({ message: "ok", data: jobs });
-      portBackground.postMessage({ message: "finish" });
+  port.onMessage.addListener( ({ cmd }) => {
+    if (cmd === "scrap") {
+      const jobsInformation = getJobInformation();
+      const btnNext = document.querySelector("[class*=next]");
+      const pageNext = !btnNext.className.includes("disabled");
+      portBackground.postMessage({ cmd: "getInfo", jobsInformation, pageNext });
     }
   });
 });

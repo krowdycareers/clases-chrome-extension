@@ -1,38 +1,42 @@
-const saveObjectInLocalStorage = async function (obj) {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.set(obj, function () {
-        resolve();
-      });
-    } catch (ex) {
-      reject(ex);
-    }
-  });
-};
+let jobs = [];
 
-const gatObjectInLocalStorage = async function (obj) {
-  return new Promise((resolve, reject) => {
-    try {
-      chrome.storage.local.get(key, function (value) {
-        resolve(value);
-      });
-    } catch (ex) {
-      reject(ex);
-    }
-  });
-};
+function addPageToURL(url) {
+  const regex = /page=(\d+)/;
+  const match = url.match(regex);
+  const page = (match && match[1]) || "1";
+  const newPage = parseInt(page) + 1;
+
+  return url.replace(regex, `page=${newPage}`);
+}
+
+async function changeTabToNextPage(url, id) {
+  const newUrl = addPageToURL(url);
+  await chrome.tabs.update(id, { url: newUrl });
+}
 
 chrome.runtime.onConnect.addListener(function (port) {
-  port.onMessage.addListener(async function ({ message }) {
-    if (message === "startscrap") {
-      const status = "start";
-      await saveObjectInLocalStorage(status);
-    }
-    if (message === "finish") {
-      //const status = await getObjectInLocalStorage("status");
+  port.onMessage.addListener(async function (params, sender) {
+    const { cmd } = params;
 
-      //if (status == "start")
-      port.postMessage({ message: "nextpage" });
+    if (cmd === "start") {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      let port = chrome.tabs.connect(tab.id, { name: "bg-content_script" });
+      port.postMessage({ cmd: "scrap" });
+    }
+    if (cmd === "getInfo") {
+      const { jobsInformation, pageNext } = params;
+      jobs = [...jobs, ...jobsInformation];
+      if (pageNext) {
+        const {
+          sender: {
+            tab: { url, id },
+          },
+        } = sender;
+        changeTabToNextPage(url, id);
+      }
     }
   });
 });

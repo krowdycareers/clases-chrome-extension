@@ -1,28 +1,45 @@
+// const baseUrl = "https://www.occ.com.mx/empleos/?page=";
+// const totalPages = 7806;
+
+// async function fetchData(url) {
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     console.log(data);
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// }
+
+// async function iteratePages() {
+//   for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+//     const url = baseUrl + currentPage;
+//     await fetchData(url);
+//   }
+// }
+
 function getJobInformation() {
+  // iteratePages();
   let jobElementInformation = document.querySelectorAll("div[id*=jobcard]");
   jobElementInformation = [...jobElementInformation];
+
+  // get job information
   const jobJsonInformation = jobElementInformation.map((el) => {
-    console.log(el.children);
     const [
-      { ariaLabel: title },
+      {},
       {
         children: [
           {
-            children: [
-              {},
-              {},
-              { innerText: salaryRange },
-              {},
-              {
-                children: [{ innerText: country }],
-              },
-            ],
+            children: [{ innerText: date }, {}, { innerText: salaryRange }],
           },
         ],
       },
     ] = el.children;
-    return { title, salaryRange, country };
+    dateSplit = date.split("\n")[0];
+    country = el.querySelector("p[class*=zonesLinks]").innerText;
+    return { dateSplit, salaryRange, country };
   });
+
   return jobJsonInformation;
 }
 chrome.runtime.onConnect.addListener((port) => {

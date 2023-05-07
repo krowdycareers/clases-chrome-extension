@@ -34,8 +34,10 @@ const portBackground = chrome.runtime.connect({
   name: "content_script-background",
 });
 
+portBackground.postMessage({ cmd: "online" });
+
 chrome.runtime.onConnect.addListener(function (port) {
-  port.onMessage.addListener( ({ cmd }) => {
+  port.onMessage.addListener(({ cmd }) => {
     if (cmd === "scrap") {
       const jobsInformation = getJobInformation();
       const btnNext = document.querySelector("[class*=next]");

@@ -54,10 +54,12 @@ function filterJobs(jobsData) {
 // getJobsInformation();
 chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(({ cmd }) => {
-    if ((cmd = "scrap")) {
+    if ((cmd == "scrap")) {
       const jobsInformation = getJobsInformation();
-      const filteredJobsInformation = filterJobs(jobsInformation);
-      port.postMessage({ message: filteredJobsInformation });
+     // const filteredJobsInformation = filterJobs(jobsInformation);
+   //   port.postMessage({ message: filteredJobsInformation });
+
+   alert('Se procesó la información')
     }
   });
 });

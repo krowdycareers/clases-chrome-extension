@@ -42,11 +42,20 @@ function getJobInformation() {
 
   return jobJsonInformation;
 }
+const portBackground = chrome.runtime.connect({
+  name:"content_script-background"
+})
+
+portBackground.postMessage({cmd:'online'})
+
 chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(({ cmd }) => {
-    if (cmd === "scrap") {
+    if (cmd == "scrap") {
       const jobsInformation = getJobInformation();
-      port.postMessage({ message: jobsInformation });
+      const buttonNext = document.querySelector("[class*=next]")
+      const nextPage = !buttonNext.className.includes("disabled")
+      port.postMessage({ cmd:'getInfo',jobs: jobsInformation, nextPage });
+      alert("se proceso la información")
     }
   });
 });

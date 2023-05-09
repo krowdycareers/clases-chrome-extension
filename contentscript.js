@@ -27,39 +27,21 @@ function getJobsInformation() {
   return jobJsonInformation;
 }
 
-function filterJobs(jobsData) {
-  const filteredJobs = {};
-
-  for (const job of jobsData) {
-    const fecha = job.fecha.split("\n")[0];
-    const salary = job.salary.split("\n")[0];
-
-    if (!filteredJobs[fecha]) {
-      filteredJobs[fecha] = {};
-    }
-
-    if (!filteredJobs[fecha][salary]) {
-      filteredJobs[fecha][salary] = { count: 0, jobs: [] };
-    }
-
-    filteredJobs[fecha][salary].count++;
-    filteredJobs[fecha][salary].jobs.push(job.title);
-  }
-
-  return filteredJobs;
-}
+const portBackground = chrome.runtime.connect(
+  { name: 'content_script-background' });
 
 
-
-// getJobsInformation();
 chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(({ cmd }) => {
-    if ((cmd == "scrap")) {
+    if (cmd == "scrap") {
       const jobsInformation = getJobsInformation();
-     // const filteredJobsInformation = filterJobs(jobsInformation);
-   //   port.postMessage({ message: filteredJobsInformation });
+      //  const buttonNext = document.querySelectorAll("[class*=next]");
+      const buttonNext = document.querySelector("[class*=next]");
+      const nextPage = !buttonNext.className.includes("disabled");
+      // const filteredJobsInformation = filterJobs(jobsInformation);
+      portBackground.postMessage({ cmd: 'getInfo', jobsInformation, nextPage });
 
-   alert('Se procesó la información')
+      // alert('Se procesó la información')
     }
   });
 });

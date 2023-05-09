@@ -31,13 +31,21 @@ function getJobsInformation() {
 
 // getJobsInformation();
 
+const portBackground = chrome.runtime.connect({
+  name: "content_script-background",
+});
+
+portBackground.postMessage({ cmd: "online" });
+
 chrome.runtime.onConnect.addListener(function (port) {
   port.onMessage.addListener(({ cmd }) => {
     // alert(message);
 
     if (cmd == "scrap") {
       const jobsInformation = getJobsInformation();
-      port.postMessage({ message: jobsInformation });
+      const buttonNext = document.querySelector("[class*=next]");
+      const nextPage = !buttonNext.className.includes("disabled");
+      portBackground.postMessage({ cmd: "getInfo", jobsInformation, nextPage });
     }
   });
 });

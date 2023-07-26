@@ -1,18 +1,9 @@
-const btnScripting = document.getElementById("btncomunicacion");
-const btnScriptingBackground = document.getElementById("btncomunicacionbckg");
+const btnScrap = document.getElementById("btn-scrap");
 
-btnScripting.addEventListener("click", async () => {
+btnScrap.addEventListener("click", async () => {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   let port = chrome.tabs.connect(tab.id, { name: "popup" });
-  port.postMessage({ message: "hola" });
-  port.onMessage.addListener(function ({ message }) {
-    alert(message);
-  });
-});
-
-btnScriptingBackground.addEventListener("click", async () => {
-  var port = chrome.runtime.connect({ name: "popup-background" });
-  port.postMessage({ message: "Hola BD" });
+  port.postMessage({ cmd: "scrap-jobs" });
   port.onMessage.addListener(function ({ message }) {
     alert(message);
   });
